@@ -9,35 +9,34 @@
 #
 #     - To trigger manual generation invoke:
 #
-#         nuke --generate-configuration AppVeyor --host AppVeyor
+#         nuke --generate-configuration AppVeyor_continuous --host AppVeyor
 #
 # </auto-generated>
 # ------------------------------------------------------------------------------
 
 image:
   - Visual Studio 2019
+  - Ubuntu1804
 
 branches:
-  only:
+  except:
     - master
     - /release\/*/
 
 skip_tags: true
 
 build_script:
-  - cmd: .\build.cmd Pack Test SignPackages
-  - sh: ./build.cmd Pack Test SignPackages
+  - cmd: .\build.cmd Test Pack
+  - sh: ./build.cmd Test Pack
 
 artifacts:
-  - path: output/packages/*.nupkg
   - path: output/test-results/*.trx
   - path: output/test-results/*.xml
+  - path: output/packages/*.nupkg
 
 environment:
   EnterpriseAccessToken:
     secure: YLojRV4xp5V+aZTpuu4rrXvLi4IG+b+wdOMnzTwM0A/s/HBndTYjqFn/Q33WhnnQ
-  SignPathApiToken:
-    secure: uQTH2MxpqiqWTy7EJkjtNc43ipG17EUOQN99QsODRNgtNEcikDaP0t4ylekK/ibn
   SlackAppAccessToken:
     secure: HPPJFlTf6aaHXIbCYTkBId2/8nxawEj+nZsebi6ozNAb54CaGHWYmY3LUlXhL3XZE7rXQpWhvaEM2fbSOqAG1ZT/TAa4uQzj4nohW3jOqtY=
   SlackUserAccessToken:
