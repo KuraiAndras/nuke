@@ -17,7 +17,7 @@ partial class Build : ISignPackages
     public IEnumerable<AbsolutePath> SignPathPackages
         => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg")
             .Where(x => Path.GetFileNameWithoutExtension(x)
-                .EqualsAnyOrdinalIgnoreCase(
+                .StartsWithAnyOrdinalIgnoreCase(
                     Solution.Nuke_Common.Name,
                     Solution.Nuke_Components.Name,
                     Solution.Nuke_CodeGeneration.Name,
