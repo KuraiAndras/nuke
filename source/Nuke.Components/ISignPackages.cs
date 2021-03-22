@@ -93,12 +93,19 @@ namespace Nuke.Components
                     PolicySlug);
 
                 ReportSummary(_ => _
-                    .AddPair("Request", signingRequestUrl.Replace("api/v1", "Web")));
+                    .AddPair("Approve/Deny Request", signingRequestUrl.Replace("api/v1", "Web")));
 
-                await DownloadSignedArtifactFromUrl(
-                    ApiToken,
-                    signingRequestUrl,
-                    SignPathResponseArchive);
+                try
+                {
+                    await DownloadSignedArtifactFromUrl(
+                        ApiToken,
+                        signingRequestUrl,
+                        SignPathResponseArchive);
+                }
+                finally
+                {
+                    ReportSummary(_ => _);
+                }
 
                 UncompressZip(SignPathResponseArchive, SignPathResponseDirectory);
 

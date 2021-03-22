@@ -16,6 +16,7 @@ using Newtonsoft.Json.Linq;
 using Nuke.Common.Gitter;
 using Nuke.Common.IO;
 using Nuke.Common.Tooling;
+using Nuke.Common.Utilities;
 
 namespace Nuke.Common.Tools.Slack
 {
@@ -80,6 +81,13 @@ namespace Nuke.Common.Tools.Slack
             ControlFlow.Assert(response.StatusCode == HttpStatusCode.OK, responseContent);
 
             return SerializationTasks.JsonDeserialize<JObject>(responseContent);
+        }
+
+        private static JObject AssertNoError(this JObject jobject)
+        {
+            var error = jobject.GetPropertyValueOrNull<string>("error");
+            ControlFlow.Assert(error == null, error);
+            return jobject;
         }
     }
 }

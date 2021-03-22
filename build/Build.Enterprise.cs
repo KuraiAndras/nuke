@@ -9,6 +9,8 @@ using Nuke.Common.CI.AppVeyor;
 using Nuke.Common.CI.AzurePipelines;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.CI.TeamCity;
+using Nuke.Common.Execution;
+using Nuke.Common.Tools.Slack;
 using Nuke.Enterprise.Auditing;
 using Nuke.Enterprise.Notifications;
 
@@ -24,7 +26,7 @@ partial class Build : IHazSlackCredentials, IHazAzurePipelinesAccessToken
 
         public override string ReceiverId => Host switch
         {
-            AppVeyor { ProjectSlug: "nuke-deployment" } appveyor => appveyor.RepositoryBranch == "master" ? "C9Q99MFU0" : "G01HT7MCQ2D",
+            AppVeyor { ProjectSlug: "nuke-deployment" } appveyor => appveyor.RepositoryBranch == "master" ? "C9Q99MFU0" : "C01ML0PRVST",// "G01HT7MCQ2D",
             AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Visual Studio 2019" } => "C01ML0PRVST",
             AppVeyor { ProjectSlug: "nuke-continuous", JobName: "Image: Ubuntu1804" } => "C01N0PFG73L",
             GitHubActions { GitHubJob: "windows-latest" } => "C01NDCGA12M",
