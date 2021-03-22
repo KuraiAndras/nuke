@@ -16,11 +16,12 @@ partial class Build : ISignPackages
 {
     public IEnumerable<AbsolutePath> SignPathPackages
         => From<IPack>().PackagesDirectory.GlobFiles("*.nupkg")
-            .Where(x => Path.GetFileName(x).EqualsAnyOrdinalIgnoreCase(
-                Solution.Nuke_Common.Name,
-                Solution.Nuke_Components.Name,
-                Solution.Nuke_CodeGeneration.Name,
-                Solution.Nuke_GlobalTool.Name));
+            .Where(x => Path.GetFileNameWithoutExtension(x)
+                .EqualsAnyOrdinalIgnoreCase(
+                    Solution.Nuke_Common.Name,
+                    Solution.Nuke_Components.Name,
+                    Solution.Nuke_CodeGeneration.Name,
+                    Solution.Nuke_GlobalTool.Name));
 
     public Target SignPackages => _ => _
         .Inherit<ISignPackages>()
