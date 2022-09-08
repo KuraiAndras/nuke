@@ -61,6 +61,11 @@ namespace Nuke.Common.CI.AzurePipelines
 
         public bool TriggerDisabled { get; set; }
 
+        [CanBeNull]
+        public string PoolName { get; set; }
+        public string[] PoolDemands { get; set; } = new string[0];
+        public AzurePipelinesImage? PoolVmImage { get; set; }
+
         public bool Submodules
         {
             set => _submodules = value;
@@ -130,6 +135,7 @@ namespace Nuke.Common.CI.AzurePipelines
                        VariableGroups = ImportVariableGroups,
                        VcsPushTrigger = GetVcsPushTrigger(),
                        VcsPullRequestTrigger = GetVcsPullRequestTrigger(),
+                       Pool = GetPool(),
                        Stages = _images.Select(x => GetStage(x, relevantTargets)).ToArray()
                    };
         }
@@ -182,6 +188,22 @@ namespace Nuke.Common.CI.AzurePipelines
                        PathsInclude = PullRequestsPathsInclude,
                        PathsExclude = PullRequestsPathsExclude,
                    };
+        }
+
+        [CanBeNull]
+        protected AzurePipelinesPool GetPool()
+        {
+            if (PoolName == null &&
+               PoolDemands.Length == 0 &&
+               PoolVmImage == null)
+                return null;
+
+            return new AzurePipelinesPool
+            {
+                Name = PoolName,
+                Demands = PoolDemands,
+                VmImage = PoolVmImage,
+            };
         }
 
         protected virtual AzurePipelinesStage GetStage(
