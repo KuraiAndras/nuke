@@ -8,6 +8,9 @@ using Nuke.Common.Utilities.Collections;
 
 namespace Nuke.Common.CI.AzurePipelines.Configuration
 {
+    /// <summary>
+    /// See <a href="https://docs.microsoft.com/en-us/azure/devops/pipelines/yaml-schema/pool?view=azure-pipelines">pool definition</a>
+    /// </summary>
     [PublicAPI]
     public class AzurePipelinesPool : ConfigurationEntity
     {
