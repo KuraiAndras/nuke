@@ -35,6 +35,13 @@ trigger:
     exclude:
       - excluded_path
 
+pool:
+  name: 'My pool'
+  demands
+    - myCustomCapability
+    - Agent.Version -equals 2.144.0
+  vmImage: UbuntuLatest
+
 stages:
   - stage: ubuntu_18_04
     displayName: 'ubuntu-18.04'
