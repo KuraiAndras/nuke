@@ -35,9 +35,7 @@ else
 
     # Install by channel or version
     DOTNET_DIRECTORY="$TEMP_DIRECTORY/dotnet-unix"
-    if [[ -n ${DOTNET_VERSION+x} ]]; then
-        "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --version "$DOTNET_VERSION" --no-path
-    elif [[ -f $DOTNET_GLOBAL_FILE ]]; then
+    if [[ -f $DOTNET_GLOBAL_FILE ]]; then
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --jsonfile "$DOTNET_GLOBAL_FILE" --no-path
     else
         "$DOTNET_INSTALL_FILE" --install-dir "$DOTNET_DIRECTORY" --channel "$DOTNET_CHANNEL" --no-path

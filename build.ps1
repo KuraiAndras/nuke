@@ -57,10 +57,7 @@ else {
 
     # Install by channel or version
     $DotNetDirectory = "$TempDirectory\dotnet-win"
-    if (Test-Path variable:DotNetVersion) {
-        ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -Version $DotNetVersion -NoPath }
-    }
-    elseif (Test-Path $DotNetGlobalFile) {
+    if (Test-Path $DotNetGlobalFile) {
         ExecSafe { & powershell $DotNetInstallFile -InstallDir $DotNetDirectory -JSonFile $DotNetGlobalFile -NoPath }
     }
     else {
